@@ -228,7 +228,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <Label fx:id="labelServerIP" prefHeight="20.0" prefWidth="590.0" text="Private Server IP address: X.X.X.X" textFill="WHITE" />
             <HBox prefHeight="380.0" prefWidth="600.0">
@@ -238,15 +238,6 @@
                         <ListView id="US" fx:id="listViewUsersS" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: black; -fx-text-fill: white;" />
                         <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="300.0" spacing="10.0">
                            <children>
-                              <Button fx:id="buttonRoomSettings" mnemonicParsing="false" onAction="#openRoomSettings" prefHeight="30.0" prefWidth="30.0">
-                                 <graphic>
-                                    <ImageView fitHeight="18.0" fitWidth="18.0" pickOnBounds="true" preserveRatio="true">
-                                       <image>
-                                          <Image url="@../resources/icon-settings.png" />
-                                       </image>
-                                    </ImageView>
-                                 </graphic>
-                              </Button>
                               <Button fx:id="buttonStartGame" mnemonicParsing="false" onAction="#startGame" prefHeight="30.0" prefWidth="95.0" text="Start game" />
                               <Button fx:id="buttonOpenClose" mnemonicParsing="false" onAction="#toggleOpenClose" prefHeight="30.0" prefWidth="85.0" text="Open">
                                  <graphic>
@@ -274,52 +265,6 @@
                </children>
             </HBox>
          </children>
-      </VBox>
-      <VBox fx:id="vboxRoomSettings" alignment="TOP_RIGHT" layoutX="100.0" layoutY="50.0" prefHeight="300.0" prefWidth="400.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
-         <children>
-            <HBox alignment="BOTTOM_RIGHT" prefHeight="30.0" prefWidth="400.0">
-               <children>
-                  <Separator orientation="VERTICAL" prefHeight="30.0" prefWidth="98.0" visible="false" />
-                  <Label alignment="CENTER" prefHeight="18.0" prefWidth="200.0" text="Ban list" textFill="WHITE">
-                     <font>
-                        <Font size="24.0" />
-                     </font></Label>
-                  <Separator orientation="VERTICAL" prefHeight="30.0" prefWidth="68.0" visible="false" />
-                  <Label alignment="TOP_RIGHT" onMouseClicked="#closeRoomSettings" prefHeight="30.0" prefWidth="30.0">
-                     <graphic>
-                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../resources/icon-close-white36.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="400.0">
-               <children>
-                  <Separator orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" />
-                  <Label prefHeight="18.0" prefWidth="140.0" text="Nickname" textFill="WHITE" />
-                  <Label prefWidth="140.0" text="Address" textFill="WHITE" />
-                  <Label onMouseClicked="#closeRoomSettings" prefHeight="25.0" prefWidth="106.0" text="Remove ban" textFill="WHITE" />
-               </children>
-            </HBox>
-            <HBox prefHeight="200.0" prefWidth="400.0">
-               <children>
-                  <ListView id="BU" fx:id="listViewBannedUsers" prefHeight="200.0" prefWidth="400.0" style="-fx-background-color: black; -fx-text-fill: white;" />
-               </children>
-            </HBox>
-            <HBox alignment="CENTER" prefHeight="32.0" prefWidth="400.0" spacing="10.0">
-               <children>
-                  <TextField fx:id="textFieldBanNickname" onKeyTyped="#validateBanNicknameAndAddress" prefHeight="30.0" prefWidth="150.0" promptText="Nickname" />
-                  <TextField fx:id="textFieldBanAddress" onKeyTyped="#validateBanNicknameAndAddress" prefHeight="30.0" prefWidth="150.0" promptText="Address" />
-                  <Button fx:id="buttonBan" disable="true" mnemonicParsing="false" onAction="#addManualBan" prefHeight="30.0" prefWidth="60.0" text="Ban" />
-               </children>
-            </HBox>
-         </children>
-         <padding>
-            <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />
-         </padding>
       </VBox>
       <VBox fx:id="vboxClientRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
          <children>

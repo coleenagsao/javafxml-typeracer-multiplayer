@@ -33,7 +33,6 @@ public class ServerStream implements IServer{
 
 	private ArrayList<User> users;
 	private ArrayList<ObjectOutputStream> writers;
-	private ArrayList<User> bannedUsers;
 
 	public ServerStream(Controller controller, String nickname, int usersRequired, int maxCapacity, boolean rejoin)
 	{
@@ -49,7 +48,7 @@ public class ServerStream implements IServer{
 		this.users.add(u);
 		this.writers = new ArrayList<ObjectOutputStream>();
 		this.writers.add(null);
-		this.bannedUsers = new ArrayList<User>();
+
 
 		try {
 			this.serverListener = new ServerListener(PORT);
@@ -158,19 +157,14 @@ public class ServerStream implements IServer{
 
 								// check if the connection can happen
 								// the user is banned
-								if(isBanned(this.socket.getInetAddress()))
-								{
-									mReply.setMsgType(MessageType.CONNECT_FAILED);
-									mReply.setNickname("");
-									mReply.setContent("You've been banned from this room");
-								}
+
 								// check if there is already a connection for this address
 								/*if()
 								{
 
 								}*/
 								// the room is closed
-								else if(!controller.isRoomOpen())
+								if(!controller.isRoomOpen())
 								{
 									mReply.setMsgType(MessageType.CONNECT_FAILED);
 									mReply.setNickname("");
@@ -343,70 +337,6 @@ public class ServerStream implements IServer{
 		this.controller.addToTextArea(msg);
 	}
 
-	@Override
-	public User sendBanUser(String banNickname)
-	{
-		System.out.println("Ban user: " + banNickname); // test
-		Message msg = new Message(MessageType.BAN, controller.getCurrentTimestamp(), banNickname, "You have been banned from the room");
-		User result = null;
-		// send ban to everyone (the nickname indicates which user is getting banned)
-		this.sendMessage(msg);
-
-		// remove user and writer
-		for(int i = 1; i < this.users.size(); i++)
-		{
-			if(this.users.get(i).getNickname().equals(banNickname))
-			{
-				result = this.users.get(i);
-				this.bannedUsers.add(result);
-				this.users.remove(i);
-				this.writers.remove(i);
-				break;
-			}
-		}
-
-		return result;
-	}
-
-	@Override
-	public boolean sendBanUser(String banNickname, String banAddress)
-	{
-		// we check if the entry is already present
-		for(User u : this.bannedUsers)
-			if(banNickname.equals(u.getNickname()) && banAddress.equals(u.getAddress().getHostAddress()))
-				return false;
-		try {
-			User u = new User(banNickname, InetAddress.getByName(banAddress));
-			this.bannedUsers.add(u);
-
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
-		return true;
-	}
-
-	@Override
-	public boolean removeBan(String address)
-	{
-		System.out.println("Remove Ban: " + address); // test
-		for(User u : this.bannedUsers)
-		{
-			System.out.println(u.getAddress().toString());
-		}
-		for(User u : this.bannedUsers)
-		{
-			try {
-				if(InetAddress.getByName(address).equals(u.getAddress()))
-				{
-					this.bannedUsers.remove(u);
-					return true;
-				}
-			} catch (UnknownHostException e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	}
 
 	@Override
 	public boolean checkCanStartGame()
@@ -477,13 +407,5 @@ public class ServerStream implements IServer{
 		}
 
 		return list;
-	}
-
-	private boolean isBanned(InetAddress bannedAddress)
-	{
-		for(User u : this.bannedUsers)
-			if(u.getAddress().equals(bannedAddress))
-				return true;
-		return false;
 	}
 }

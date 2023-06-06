@@ -100,15 +100,6 @@ public class Controller {
 	@FXML private TextField textFieldChatS;
 	@FXML private Button buttonChatSendS;
 
-	// MultiPlayer: RoomSettings
-	@FXML private VBox vboxRoomSettings;
-	@FXML private ListView<HBox> listViewBannedUsers;
-	private ArrayList<Label> listBannedNickname;
-	private ArrayList<Label> listBannedAddress;
-	private ArrayList<Label> listRemoveBan;
-	@FXML private TextField textFieldBanNickname;
-	@FXML private TextField textFieldBanAddress;
-	@FXML private Button buttonBan;
 
 	// MultiPlayer: Client
 	private IClient client;
@@ -137,7 +128,6 @@ public class Controller {
 		this.vboxCreateRoom.setVisible(false);
 		this.vboxJoinRoom.setVisible(false);
 		this.vboxServerRoom.setVisible(false);
-		this.vboxRoomSettings.setVisible(false);
 		this.vboxClientRoom.setVisible(false);
 
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
@@ -437,11 +427,6 @@ public class Controller {
 
 		this.connectedUsers = 1;
 
-		// reset Banned Users list
-		this.listViewBannedUsers.getItems().clear();
-		this.listBannedNickname = new ArrayList<Label>();
-		this.listBannedAddress = new ArrayList<Label>();
-		this.listRemoveBan = new ArrayList<Label>();
 	}
 
 	// MultiPlayer: Join Existing Room callbacks
@@ -527,154 +512,7 @@ public class Controller {
 		this.server = null;
 	}
 
-	@FXML public void banUser(MouseEvent event)
-	{
-		// check if there is already an entry with that address, in case just kick him out
-		// get the button index
-		for(int i = 1; i < this.connectedUsers; i++)
-		{
-			if(this.listLabelBan.get(i).equals(event.getTarget()))
-			{
-				// remove user from the listView
-				this.removeUser(this.listNicknameS.get(i).getText());
 
-				// add ban message to the textArea
-				this.addToTextArea(this.getCurrentTimestamp() + " " + this.listNicknameS.get(i).getText() + " has been banned");
-
-				// ban and send Kick message
-				User u = this.server.sendBanUser(this.listNicknameS.get(i).getText());
-				this.addBannedUser(u.getNickname(), u.getAddress().getHostAddress());
-
-				System.out.println("Server: banned user " + u.getNickname() + " (" + u.getAddress().getHostAddress() + ")");
-
-				break;
-			}
-		}
-	}
-	@FXML public void openRoomSettings()
-	{
-		System.out.println("Open settings");
-
-		this.buttonBack.setDisable(true);
-		this.buttonRoomSettings.setDisable(true);
-		this.buttonStartGame.setDisable(true);
-		this.buttonOpenClose.setDisable(true);
-		this.textFieldChatS.setDisable(true);
-		this.buttonChatSendS.setDisable(true);
-
-		this.vboxRoomSettings.setVisible(true);
-		this.textFieldBanNickname.setText("");
-		this.textFieldBanNickname.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		this.textFieldBanAddress.setText("");
-		this.textFieldBanAddress.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		this.buttonBan.setDisable(true);
-	}
-	@FXML public void removeBan(MouseEvent event)
-	{
-		System.out.println("Remove ban selected"); // test
-		// get the button index
-		for(int i = 0; i < this.listViewBannedUsers.getItems().size(); i++)
-		{
-			if(this.listRemoveBan.get(i).equals(event.getTarget()))
-			{
-				System.out.println("Server: user " + this.listBannedNickname.get(i).getText() + " (" + this.listBannedAddress.get(i).getText() + ") is no longer banned");
-
-				// remove banned user from server
-				boolean result = this.server.removeBan(this.listBannedAddress.get(i).getText());
-
-				if(result)
-				{
-					// add ban message to the textArea
-					this.addToTextArea(this.getCurrentTimestamp() + " " + this.listBannedNickname.get(i).getText() + " has is no longer banned");
-				}
-
-				// remove labels
-				this.listBannedNickname.remove(i);
-				this.listBannedAddress.remove(i);
-
-				// remove  banned user from the listView
-				this.listViewBannedUsers.getItems().remove((HBox) this.listRemoveBan.get(i).getParent());
-
-				// remove button
-				this.listRemoveBan.remove(i);
-
-				break;
-			}
-		}
-	}
-	@FXML public void validateBanNicknameAndAddress()
-	{
-		// nickname OK & address OK (or empty)
-		if(this.checkNickname(this.textFieldBanNickname.getText()) && (this.checkIP(this.textFieldBanAddress.getText()) || this.textFieldBanAddress.getText().isEmpty()))
-		{
-			this.buttonBan.setDisable(false);
-			this.textFieldBanNickname.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-			this.textFieldBanAddress.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		}
-		// nickname OK & address NOT (nor empty)
-		else if(this.checkNickname(this.textFieldBanNickname.getText()) && !(checkIP(this.textFieldBanAddress.getText()) || this.textFieldBanAddress.getText().isEmpty()))
-		{
-			this.buttonBan.setDisable(true);
-			this.textFieldBanNickname.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-			this.textFieldBanAddress.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-		}
-		// nickname NOT & address OK (or empty)
-		else if(!this.checkNickname(this.textFieldBanNickname.getText()) && (checkIP(this.textFieldBanAddress.getText()) || this.textFieldBanAddress.getText().isEmpty()))
-		{
-			this.buttonBan.setDisable(true);
-			this.textFieldBanNickname.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-			this.textFieldBanAddress.setStyle("-fx-border-width: 0px; -fx-focus-color: #039ED3;");
-		}
-		// nickname NOT & address NOT (nor empty)
-		else
-		{
-			this.buttonBan.setDisable(true);
-			this.textFieldBanNickname.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-			this.textFieldBanAddress.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-		}
-	}
-	@FXML public void addManualBan(ActionEvent event)
-	{
-		if(!this.checkNickname(this.textFieldBanNickname.getText()))
-		{
-			this.showAlert(AlertType.ERROR, "Invalid nickname", "The nickname bust be from 3 to 15 alphanumeric char long.");
-			this.buttonBan.setDisable(true);
-			this.textFieldBanNickname.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-			return;
-		}
-		if(!this.checkIP(this.textFieldBanAddress.getText()) && !this.textFieldBanAddress.getText().isEmpty())
-		{
-			this.showAlert(AlertType.ERROR, "Invalid IP Address", "The address must be X.X.X.X or empty (localhost).");
-			this.buttonBan.setDisable(true);
-			this.textFieldBanAddress.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-			return;
-		}
-
-		String banAddress = this.textFieldBanAddress.getText().isEmpty() ? "127.0.0.1" : this.textFieldBanAddress.getText();
-		if(this.server.sendBanUser(this.textFieldBanNickname.getText(), banAddress))
-		{
-			this.addBannedUser(this.textFieldBanNickname.getText(), banAddress);
-			this.addToTextArea(this.getCurrentTimestamp() + " " + this.textFieldBanNickname.getText() + " has been banned");
-		}
-		else
-		{
-			this.showAlert(AlertType.ERROR, "Failed to add ban entry", "The entry already exist");
-			this.buttonBan.setDisable(true);
-		}
-	}
-	@FXML public void closeRoomSettings()
-	{
-		System.out.println("Close settings");
-
-		this.buttonBack.setDisable(false);
-		this.buttonRoomSettings.setDisable(false);
-		this.buttonStartGame.setDisable(!this.server.checkCanStartGame());
-		this.buttonOpenClose.setDisable(false);
-		this.textFieldChatS.setDisable(false);
-		this.buttonChatSendS.setDisable(false);
-
-		this.vboxRoomSettings.setVisible(false);
-	}
 	@FXML public void toggleOpenClose(ActionEvent event)
 	{
 		// close the room
@@ -990,7 +828,7 @@ public class Controller {
 	}
 	public void enableStartGame(boolean value)
 	{
-		this.buttonStartGame.setDisable(!value || this.vboxRoomSettings.isVisible());
+		this.buttonStartGame.setDisable(!value);
 	}
 	public void closeConnection()
 	{
@@ -1005,38 +843,7 @@ public class Controller {
 			this.server = null;
 		}
     }
-	private void addBannedUser(String nickname, String address)
-	{
-		HBox hbox = new HBox();
-		hbox.setPrefSize(400, 25);
-		hbox.setSpacing(10);
-		// banned nickname
-		Label l = new Label(nickname);
-		l.setPrefSize(130, 25);
-		l.setTextFill(Paint.valueOf("white"));
-		hbox.getChildren().add(l);
-		this.listBannedNickname.add(l);
-		// banned address
-		l = new Label(address);
-		l.setPrefSize(130, 25);
-		l.setTextFill(Paint.valueOf("white"));
-		hbox.getChildren().add(l);
-		this.listBannedAddress.add(l);
-		// remove ban
-		l = new Label();
-		ImageView iv = new ImageView(new Image(this.getClass().getResource("/resources/icon-trash-bin.png").toString()));
-		iv.resize(25, 25);
-		l.setGraphic(iv);
-		l.setPrefSize(25, 25);
-		l.setTooltip(new Tooltip("remove the ban for that user"));
-		hbox.getChildren().add(l);
-		l.setOnMouseClicked(this::removeBan);
-		l.setOnMouseEntered(this::setBinAnimationOn);
-		l.setOnMouseExited(this::setBinAnimationOff);
-		this.listRemoveBan.add(l);
 
-		this.listViewBannedUsers.getItems().add(hbox);
-	}
 	private void setBinAnimationOn(MouseEvent event)
 	{
 		ImageView iv = (ImageView) ((Label) event.getTarget()).getChildrenUnmodifiable().get(0);
