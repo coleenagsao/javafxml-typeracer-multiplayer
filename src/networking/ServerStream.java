@@ -21,20 +21,20 @@ import model.chat.Message;
 import model.chat.MessageType;
 
 public class ServerStream implements IServer{
-	
+
 	private static final int PORT = 9001;
 	private int minToStartGame = 2;
 	private int maxNumUsers = 6;
 	private Controller controller;
 	private String nickname;
 	private boolean users_rejoin;
-	
+
 	private ServerListener serverListener;
-	
+
 	private ArrayList<User> users;
 	private ArrayList<ObjectOutputStream> writers;
 	private ArrayList<User> bannedUsers;
-	
+
 	public ServerStream(Controller controller, String nickname, int usersRequired, int maxCapacity, boolean rejoin)
 	{
 		this.controller = controller;
@@ -42,7 +42,7 @@ public class ServerStream implements IServer{
 		this.minToStartGame = usersRequired;
 		this.maxNumUsers = maxCapacity;
 		this.users_rejoin = rejoin;
-		
+
 		this.users = new ArrayList<User>();
 		User u = new User(nickname);
 		u.setReady(true); // the server is always ready
@@ -50,7 +50,7 @@ public class ServerStream implements IServer{
 		this.writers = new ArrayList<ObjectOutputStream>();
 		this.writers.add(null);
 		this.bannedUsers = new ArrayList<User>();
-		
+
 		try {
 			this.serverListener = new ServerListener(PORT);
 			this.serverListener.start();
@@ -72,17 +72,17 @@ public class ServerStream implements IServer{
 			}
 		}
 	}
-	
+
 	private class ServerListener extends Thread {
-		
+
 		private ServerSocket listener;
-		
+
 		public ServerListener(int port) throws IOException
 		{
 			this.listener = new ServerSocket(port);
 			System.out.println("Server (" + this.getId() + "): listening for connections on port " + PORT);
 		}
-		
+
 		@Override
 		public void run()
 		{
@@ -104,7 +104,7 @@ public class ServerStream implements IServer{
 				}
 			}
 		}
-		
+
 		public void closeSocket()
 		{
 			try {
@@ -115,22 +115,22 @@ public class ServerStream implements IServer{
 			}
 		}
 	}
-	
+
 	private class Handler extends Thread {
 		private Socket socket;
-		
+
 		private InputStream is;
 		private ObjectInputStream input;
 		private OutputStream os;
         private ObjectOutputStream output;
-        
-        
+
+
 		public Handler(Socket socket)
 		{
 			System.out.println("Server (" + this.getId() + "): connection accepted");
 			this.socket = socket;
 		}
-		
+
 		@Override
 		public void run()
 		{
@@ -140,7 +140,7 @@ public class ServerStream implements IServer{
 				this.input = new ObjectInputStream(this.is);
 				this.os = this.socket.getOutputStream();
 				this.output = new ObjectOutputStream(this.os);
-				
+
 				while(this.socket.isConnected())
 				{
 					Message incomingMsg = (Message) this.input.readObject();
@@ -152,10 +152,10 @@ public class ServerStream implements IServer{
 							case CONNECT:
 							{
 								System.out.println("Server: connect message received");
-								
+
 								Message mReply = new Message();
 								mReply.setTimestamp(controller.getCurrentTimestamp());
-								
+
 								// check if the connection can happen
 								// the user is banned
 								if(isBanned(this.socket.getInetAddress()))
@@ -167,7 +167,7 @@ public class ServerStream implements IServer{
 								// check if there is already a connection for this address
 								/*if()
 								{
-									
+
 								}*/
 								// the room is closed
 								else if(!controller.isRoomOpen())
@@ -186,7 +186,7 @@ public class ServerStream implements IServer{
 								// the user cannot rejoin after being kicked
 								/*else if(!users_rejoin)
 								{
-									
+
 								}*/
 								// a username with the same nickname is already inside the room
 								else if(checkDuplicateNickname(incomingMsg.getNickname()))
@@ -203,40 +203,40 @@ public class ServerStream implements IServer{
 									users.add(u);
 									writers.add(this.output);
 									controller.addUser(u);
-									
+
 									// forward to other users the new user joined
 									mReply.setMsgType(MessageType.USER_JOINED);
 									mReply.setNickname(incomingMsg.getNickname());
 									forwardMessage(mReply);
-									
+
 									// create OK message, containing the updated user list
 									mReply.setMsgType(MessageType.CONNECT_OK);
 									mReply.setNickname(nickname);
 									mReply.setContent(getUserList());
-									
+
 									// add the message to the chat textArea
 									controller.addToTextArea(mReply.getTimestamp() + " " + incomingMsg.getNickname() + " has joined the room");
 								}
 								// send back a reply for the CONNECT request
 								this.output.writeObject(mReply);
-								
+
 								break;
 							}
 							case CHAT:
 							{
 								// add the message to the chat textArea
 								controller.addToTextArea(incomingMsg);
-								
+
 								// forward the chat message
 								forwardMessage(incomingMsg);
-								
+
 								break;
 							}
 							case READY:
 							{
 								// upadate ready user
 								controller.updateReady(incomingMsg.getNickname(), Boolean.parseBoolean(incomingMsg.getContent()));
-								
+
 								// update the user
 								for(User u : users)
 								{
@@ -246,26 +246,26 @@ public class ServerStream implements IServer{
 										break;
 									}
 								}
-								
+
 								// enable start button if everyone is ready & there are enough users
 								controller.enableStartGame(checkCanStartGame());
-								
+
 								// forward the ready to other users
 								forwardMessage(incomingMsg);
-								
+
 								break;
 							}
 							case DISCONNECT:
 							{
 								// add the message to the chat textArea
 								controller.addToTextArea(incomingMsg.getTimestamp() + " " + incomingMsg.getNickname() + " has left the room");
-								
+
 								// forward disconnection to others
 								forwardMessage(incomingMsg);
-								
+
 								// update controller list view
 								controller.removeUser(incomingMsg.getNickname());
-								
+
 								// remove user and writer from the list
 								for(int i = 1; i < users.size(); i++)
 								{
@@ -276,16 +276,16 @@ public class ServerStream implements IServer{
 										break;
 									}
 								}
-								
+
 								// enable start button if everyone is ready
 								controller.enableStartGame(checkCanStartGame());
-								
+
 								// close the connection(?)
 								socket.close();
-								
+
 								// stop the thread(?)
 								//interrupt();
-								
+
 								break;
 							}
 							default:
@@ -296,7 +296,7 @@ public class ServerStream implements IServer{
 						}
 					}
 				}
-				
+
 			} catch(SocketException e) {
 				// "Connection reset" when the other endpoint disconnects
 				if(e.getMessage().contains("Connection reset"))
@@ -313,10 +313,10 @@ public class ServerStream implements IServer{
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			}
-			
+
 		}
 	}
-	
+
 	private void sendMessage(Message message)
 	{
 		// send the message to each user except the server
@@ -330,39 +330,19 @@ public class ServerStream implements IServer{
 			}
 		}
 	}
-	
+
 	@Override
 	public void sendChatMessage(String content)
 	{
 		Message msg = new Message(MessageType.CHAT, this.controller.getCurrentTimestamp(), this.nickname, content);
-		
+
 		// send the chat message to everyone
 		this.sendMessage(msg);
-		
+
 		// add the chat message to the textArea
 		this.controller.addToTextArea(msg);
 	}
-	
-	@Override
-	public void sendKickUser(String kickNickname)
-	{
-		Message msg = new Message(MessageType.KICK, controller.getCurrentTimestamp(), kickNickname, "You have been kicked out from the room");
-		
-		// send kick to everyone (the nickname indicates which user is getting kicked)
-		this.sendMessage(msg);
-		
-		// remove user and writer
-		for(int i = 1; i < this.users.size(); i++)
-		{
-			if(this.users.get(i).getNickname().equals(kickNickname))
-			{
-				this.users.remove(i);
-				this.writers.remove(i);
-				break;
-			}
-		}
-	}
-	
+
 	@Override
 	public User sendBanUser(String banNickname)
 	{
@@ -371,7 +351,7 @@ public class ServerStream implements IServer{
 		User result = null;
 		// send ban to everyone (the nickname indicates which user is getting banned)
 		this.sendMessage(msg);
-		
+
 		// remove user and writer
 		for(int i = 1; i < this.users.size(); i++)
 		{
@@ -384,10 +364,10 @@ public class ServerStream implements IServer{
 				break;
 			}
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public boolean sendBanUser(String banNickname, String banAddress)
 	{
@@ -398,13 +378,13 @@ public class ServerStream implements IServer{
 		try {
 			User u = new User(banNickname, InetAddress.getByName(banAddress));
 			this.bannedUsers.add(u);
-			
+
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
 		return true;
 	}
-	
+
 	@Override
 	public boolean removeBan(String address)
 	{
@@ -427,7 +407,7 @@ public class ServerStream implements IServer{
 		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean checkCanStartGame()
 	{
@@ -438,7 +418,7 @@ public class ServerStream implements IServer{
 		}
 		return this.users.size() >= this.minToStartGame ? true : false;
 	}
-	
+
 	@Override
 	public void sendClose()
 	{
@@ -455,11 +435,11 @@ public class ServerStream implements IServer{
 				e.printStackTrace();
 			}
 		}
-		
+
 		// close the socket
 		this.serverListener.closeSocket();
 	}
-	
+
 	private void forwardMessage(Message msg)
 	{
 		// forward the message to each connected client, except the one that sent the message first
@@ -475,7 +455,7 @@ public class ServerStream implements IServer{
 			}
 		}
 	}
-	
+
 	private boolean checkDuplicateNickname(String nickname)
 	{
 		for(User u : this.users)
@@ -485,7 +465,7 @@ public class ServerStream implements IServer{
 		}
 		return false;
 	}
-	
+
 	private String getUserList()
 	{
 		String list = "";
@@ -495,15 +475,15 @@ public class ServerStream implements IServer{
 			list += u.getNickname() + "," + u.isReady();
 			list += (i == this.users.size() - 1 ? "" : ";");
 		}
-		
+
 		return list;
 	}
-	
+
 	private boolean isBanned(InetAddress bannedAddress)
 	{
 		for(User u : this.bannedUsers)
 			if(u.getAddress().equals(bannedAddress))
 				return true;
-		return false;	
+		return false;
 	}
 }

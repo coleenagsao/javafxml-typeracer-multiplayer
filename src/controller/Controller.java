@@ -91,7 +91,6 @@ public class Controller {
 	@FXML private ListView<HBox> listViewUsersS;
 	private ArrayList<Label> listNicknameS;
 	private ArrayList<Label> listReadyS;
-	private ArrayList<Label> listLabelKick;
 	private ArrayList<Label> listLabelBan;
 	@FXML private Button buttonRoomSettings;
 	@FXML private Button buttonStartGame;
@@ -153,7 +152,6 @@ public class Controller {
 		this.listReadyC = new ArrayList<Label>();
 		this.listReadyS = new ArrayList<Label>();
 		this.listImagePlayer = new ArrayList<ImageView>();
-		this.listLabelKick = new ArrayList<Label>();
 		this.listLabelBan = new ArrayList<Label>();
 
 		this.labelMinRoom.setText("" + MIN_USERS);
@@ -529,29 +527,6 @@ public class Controller {
 		this.server = null;
 	}
 
-	// MultiPlayer: Server callbacks
-	@FXML public void kickUser(MouseEvent event)
-	{
-		// get the button index
-		for(int i = 1; i < this.connectedUsers; i++)
-		{
-			if(this.listLabelKick.get(i).equals(event.getTarget()))
-			{
-				System.out.println("Server: kicked user " + this.listNicknameS.get(i).getText());
-
-				// remove user from the listView
-				this.removeUser(this.listNicknameS.get(i).getText());
-
-				// add kick message to the textArea
-				this.addToTextArea(this.getCurrentTimestamp() + " " + this.listNicknameS.get(i).getText() + " has been kicked out");
-
-				// send Kick message
-				this.server.sendKickUser(this.listNicknameS.get(i).getText());
-
-				break;
-			}
-		}
-	}
 	@FXML public void banUser(MouseEvent event)
 	{
 		// check if there is already an entry with that address, in case just kick him out
