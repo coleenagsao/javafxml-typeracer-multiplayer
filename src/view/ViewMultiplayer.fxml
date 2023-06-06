@@ -13,7 +13,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
@@ -23,7 +25,7 @@
             <Insets left="80.0" right="80.0" />
          </padding>
          <children>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Multiplayer" textFill="WHITE">
+            <Label alignment="CENTER" prefHeight="6.0" prefWidth="400.0" text="Multiplayer" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="30.0" />
                </font>
@@ -228,7 +230,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
          <children>
             <Label fx:id="labelServerIP" prefHeight="20.0" prefWidth="590.0" text="Private Server IP address: X.X.X.X" textFill="WHITE" />
             <HBox prefHeight="380.0" prefWidth="600.0">
@@ -310,6 +312,63 @@
                   </ImageView>
                </graphic>
             </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxGame" alignment="TOP_CENTER" layoutX="-9.0" layoutY="-8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="609.0" spacing="20.0" style="-fx-background-color: black;">
+         <children>
+            <AnchorPane prefHeight="421.0" prefWidth="609.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d9dada" height="89.0" layoutX="35.0" layoutY="103.0" stroke="BLACK" strokeType="INSIDE" width="543.0" />
+                  <ImageView fx:id="finish" fitHeight="89.0" fitWidth="38.0" layoutX="526.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+                  	<image>
+           				<Image url="@../resources/finish.png" />
+        		 </image>
+      			</ImageView>
+      			<ImageView fx:id="car" fitHeight="56.0" fitWidth="118.0" layoutX="49.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+		         <image>
+		            <Image url="@../resources/car.png" />
+		         </image>
+		      </ImageView>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="129.0" layoutX="23.0" layoutY="279.0" stroke="WHITE" strokeType="INSIDE" width="573.0" />
+		      <TextField fx:id="userWord" alignment="CENTER" layoutX="51.0" layoutY="348.0" onKeyPressed="#startGame" prefHeight="44.0" prefWidth="523.0">
+	            	<font>
+	                	<Font size="20.0" />
+	            	</font>
+        		</TextField>
+                  <Text fx:id="programWord" fill="WHITE" layoutX="66.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word1" textAlignment="CENTER" wrappingWidth="84.99999806284904">
+                    <font>
+                		<Font size="21.0" />
+            		</font>
+                  </Text>
+                  <Text fx:id="secondProgramWord" fill="WHITE" layoutX="193.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word2" textAlignment="CENTER" wrappingWidth="90.00000809133053">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="thirdProgramWord" fill="WHITE" layoutX="318.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word3" textAlignment="CENTER" wrappingWidth="89.99999901652336">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fourthProgramWord" fill="WHITE" layoutX="451.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word4" textAlignment="CENTER" wrappingWidth="89.99999901652336">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="44.0" layoutX="396.0" layoutY="222.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" width="200.0" />
+                  <Text layoutX="411.0" layoutY="248.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TIME LEFT:">
+                     <font>
+                        <Font name="Calibri" size="19.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="seconds" layoutX="504.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="42.64990234375">
+                     <font>
+                        <Font name="Calibri" size="31.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="playAgain" cancelButton="true" layoutX="297.0" layoutY="226.0" mnemonicParsing="false" onAction="#switchToClientRoom" text="Play Again" />
+               </children>
+             </AnchorPane>
          </children>
       </VBox>
    </children>

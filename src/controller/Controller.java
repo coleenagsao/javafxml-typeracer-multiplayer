@@ -113,6 +113,9 @@ public class Controller {
 	@FXML private TextField textFieldChatC;
 	@FXML private Button buttonChatSendC;
 
+	//Game
+	@FXML private VBox vboxGame;
+
 	private int connectedUsers;
 
 	private SimpleDateFormat tformatter;
@@ -129,6 +132,7 @@ public class Controller {
 		this.vboxJoinRoom.setVisible(false);
 		this.vboxServerRoom.setVisible(false);
 		this.vboxClientRoom.setVisible(false);
+		this.vboxGame.setVisible(false);
 
 		this.tformatter = new SimpleDateFormat("[HH:mm:ss]");
 		this.showConnectingBox(false);
@@ -548,6 +552,7 @@ public class Controller {
 	@FXML public void startGame(ActionEvent event)
 	{
 		System.out.println("Start game");
+		this.vboxGame.setVisible(true); //temp
 	}
 
 	// MultiPlayer: Client callbacks
