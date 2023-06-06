@@ -235,6 +235,26 @@ public class Controller {
 			l.setVisible(i == 0 ? false : true);
 			hbox.getChildren().add(l);
 			this.listReadyS.add(l);
+			// kick button
+			l = new Label();
+			iv = new ImageView(new Image(this.getClass().getResource("/resources/icon-kick.png").toString()));
+			iv.resize(25, 25);
+			l.setGraphic(iv);
+			l.setOnMouseClicked(this::kickUser);
+			l.setTooltip(new Tooltip("kick the user"));
+			l.setVisible(i == 0 ? false : true);
+			hbox.getChildren().add(l);
+			this.listLabelKick.add(l);
+			// ban button
+			l = new Label();
+			iv = new ImageView(new Image(this.getClass().getResource("/resources/icon-ban.png").toString()));
+			iv.resize(25, 25);
+			l.setGraphic(iv);
+			l.setOnMouseClicked(this::banUser);
+			l.setTooltip(new Tooltip("ban the user"));
+			l.setVisible(i == 0 ? false : true);
+			hbox.getChildren().add(l);
+			this.listLabelBan.add(l);
 
 			this.listViewUsersS.getItems().add(hbox);
 		}
@@ -806,6 +826,7 @@ public class Controller {
 	{
 		this.vboxCreateRoom.setVisible(false);
 		this.vboxServerRoom.setVisible(true);
+
 
 		this.state = NavState.MP_SERVER;
 	}
