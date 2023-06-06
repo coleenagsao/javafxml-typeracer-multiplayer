@@ -16,9 +16,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.TextFlow?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <children>
-      <VBox fx:id="vboxMP" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: black;">
+      <VBox fx:id="vboxMP" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" style="-fx-background-color: black;" visible="false">
          <padding>
             <Insets left="80.0" right="80.0" />
          </padding>
@@ -228,7 +228,7 @@
             </Button>
          </children>
       </VBox>
-      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
             <Label fx:id="labelServerIP" prefHeight="20.0" prefWidth="590.0" text="Private Server IP address: X.X.X.X" textFill="WHITE" />
             <HBox prefHeight="380.0" prefWidth="600.0">
@@ -271,17 +271,6 @@
                         </HBox>
                      </children>
                   </VBox>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-      <VBox fx:id="vboxLabelServerControls" alignment="CENTER" layoutX="188.0" layoutY="30.0" prefHeight="20.0" prefWidth="110.0" style="-fx-background-color: black;" visible="false">
-         <children>
-            <HBox alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="110.0">
-               <children>
-                  <Label alignment="CENTER" prefWidth="50.0" text="Ready" textFill="WHITE" />
-                  <Label alignment="CENTER" prefWidth="30.0" text="Kick" textFill="WHITE" />
-                  <Label alignment="CENTER" prefWidth="30.0" text="Ban" textFill="WHITE" />
                </children>
             </HBox>
          </children>
