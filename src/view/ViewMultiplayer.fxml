@@ -330,7 +330,7 @@
 		         </image>
 		      </ImageView>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="129.0" layoutX="23.0" layoutY="279.0" stroke="WHITE" strokeType="INSIDE" width="573.0" />
-		      <TextField fx:id="userWord" alignment="CENTER" layoutX="51.0" layoutY="348.0" onKeyPressed="#startGame" prefHeight="44.0" prefWidth="523.0">
+		      <TextField fx:id="userWord" alignment="CENTER" layoutX="51.0" layoutY="348.0" onKeyPressed="#startType" prefHeight="44.0" prefWidth="523.0">
 	            	<font>
 	                	<Font size="20.0" />
 	            	</font>
@@ -366,7 +366,17 @@
                         <Font name="Calibri" size="31.0" />
                      </font>
                   </Text>
-                  <Button fx:id="playAgain" cancelButton="true" layoutX="297.0" layoutY="226.0" mnemonicParsing="false" onAction="#switchToClientRoom" text="Play Again" />
+                  <Button fx:id="playAgain" cancelButton="true" layoutX="297.0" layoutY="226.0" mnemonicParsing="false" onAction="#backtoMenu" text="Play Again" />
+                  <ImageView fx:id="correct" fitHeight="51.0" fitWidth="49.0" layoutX="84.0" layoutY="216.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Documents/03%20-%202nd%20Semester%2022-23/4%20-%20137%20Project/multiplayer-typeracer-game/src/images/check.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wrong" fitHeight="51.0" fitWidth="49.0" layoutX="84.0" layoutY="216.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Documents/03%20-%202nd%20Semester%2022-23/4%20-%20137%20Project/multiplayer-typeracer-game/src/images/wrong.png" />
+                     </image>
+                  </ImageView>
                </children>
              </AnchorPane>
          </children>
