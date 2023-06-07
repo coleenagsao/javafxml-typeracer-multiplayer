@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
@@ -157,15 +159,19 @@ public class Controller {
     public void addToList() {
         BufferedReader reader;
         try {
-            reader = new BufferedReader(new
-                    FileReader("wordsList"));
-            String line = reader.readLine();
-            while (line != null) {
-                words.add(line);
-                // read next line
-                line = reader.readLine();
+            InputStream inputStream = getClass().getResourceAsStream("wordsList");
+            if (inputStream != null) {
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+                String line = reader.readLine();
+                while (line != null) {
+                    words.add(line);
+                    // read next line
+                    line = reader.readLine();
+                }
+                reader.close();
+            } else {
+                System.err.println("File not found: wordsList");
             }
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
