@@ -177,7 +177,7 @@ public class Controller {
         }
     }
 
-    public void initializeGame(ActionEvent event) {
+    public void initializeGame() {
 
 		playAgain.setVisible(false);
         playAgain.setDisable(true);
@@ -794,12 +794,14 @@ public class Controller {
 			this.textFieldChatS.setText("");
 		}
 	}
-	@FXML public void startGame(ActionEvent event)
+	@FXML public void startGame()
 	{
 		System.out.println("Start game");
 		this.vboxGame.setVisible(true); //temp
-		this.initializeGame(event);
+		this.server.sendStart();
+		this.initializeGame();
 	}
+
 
 	// MultiPlayer: Client callbacks
 	@FXML public void toggleReady(ActionEvent event)

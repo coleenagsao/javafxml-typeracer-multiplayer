@@ -311,6 +311,23 @@ public class ServerStream implements IServer{
 		}
 	}
 
+	public void sendStart()
+	{
+		Message msg = new Message(MessageType.START_GAME, controller.getCurrentTimestamp(), this.nickname, "Start Game");
+
+		// send the message to each user except the server (NB: it's not a normal sendMessage
+		for(int i = 1; i < this.users.size(); i++)
+		{
+			msg.setNickname(this.users.get(i).getNickname());
+			try {
+				this.writers.get(i).writeObject(msg);
+			} catch (IOException e) {
+				// remove the writer at index i?
+				e.printStackTrace();
+			}
+		}
+	}
+
 	private void sendMessage(Message message)
 	{
 		// send the message to each user except the server

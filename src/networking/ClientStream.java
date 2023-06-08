@@ -148,6 +148,10 @@ public class ClientStream implements IClient {
 
 								break;
 							}
+							case START_GAME:
+							{
+								controller.startGame();
+							}
 							case DISCONNECT:
 							{
 								// the room has been closed (connection lost from the server)
