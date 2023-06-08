@@ -157,7 +157,7 @@ public class Controller {
 
     // add words to array list
     public void addToList() {
-        BufferedReader reader;
+    	BufferedReader reader;
         try {
             InputStream inputStream = getClass().getResourceAsStream("wordsList");
             if (inputStream != null) {
@@ -175,6 +175,8 @@ public class Controller {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Collections.shuffle(words);
     }
 
     public void initializeGame() {
@@ -183,8 +185,6 @@ public class Controller {
         playAgain.setDisable(true);
         finishX = finish.getLayoutX();
         seconds.setText("60");
-        addToList();
-        Collections.shuffle(words);
         programWord.setText(words.get(wordCounter));
         secondProgramWord.setText(words.get(wordCounter+1));
         thirdProgramWord.setText(words.get(wordCounter+2));
@@ -798,8 +798,10 @@ public class Controller {
 	{
 		System.out.println("Start game");
 		this.vboxGame.setVisible(true); //temp
-		this.server.sendStart();
+		addToList();
+
 		this.initializeGame();
+		this.server.sendStart();
 	}
 
 
