@@ -25,7 +25,7 @@
             <Image url="@../resources/city.png" />
          </image>
       </ImageView>
-      <VBox id="vbox1" fx:id="vboxMP" alignment="TOP_CENTER" disable="true" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../application/application.css" visible="false">
+      <VBox id="vbox1" fx:id="vboxMP" alignment="TOP_CENTER" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../application/application.css" visible="false">
          <padding>
             <Insets left="80.0" right="80.0" />
          </padding>

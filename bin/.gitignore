@@ -1,5 +1,6 @@
+/application/
 /controller/
-/view/
-/resources/
-/networking/
 /model/
+/networking/
+/resources/
+/view/

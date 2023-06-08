@@ -19,11 +19,11 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/ViewMultiplayer.fxml"));
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("/view/ViewMultiplayerv2.fxml"));
             AnchorPane homeUtente = (AnchorPane) loader.load();
             Scene scene = new Scene(homeUtente);
             scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-            stage.setTitle("JavaFX-MultiplayerLobbySystem");
+            stage.setTitle("Git Set Go!");
             stage.setScene(scene);
             stage.setResizable(false);
             stage.show();
