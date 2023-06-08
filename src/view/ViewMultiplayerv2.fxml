@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+<?import javafx.scene.text.TextFlow?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <children>
+      <ImageView fitHeight="457.0" fitWidth="1092.0" layoutX="-205.0" layoutY="-32.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resources/city.png" />
+         </image>
+      </ImageView>
+      <VBox id="vbox1" fx:id="vboxMP" alignment="TOP_CENTER" disable="true" layoutY="53.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="20.0" stylesheets="@../application/application.css" visible="false">
+         <padding>
+            <Insets left="80.0" right="80.0" />
+         </padding>
+         <children>
+            <Text fill="WHITE" stroke="#000000e7" strokeType="OUTSIDE" strokeWidth="10.0" text="Git Set Go!">
+               <font>
+                  <Font size="86.0" />
+               </font>
+            </Text>
+            <Separator prefHeight="65.0" prefWidth="440.0" visible="false" />
+            <Button fx:id="buttonC" mnemonicParsing="false" onAction="#selectCNR" prefHeight="35.0" prefWidth="200.0" stylesheets="@../application/application.css" text="Create new room">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+            <Button fx:id="buttonJ" mnemonicParsing="false" onAction="#selectJER" prefHeight="35.0" prefWidth="200.0" text="Join existing room">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxCreateRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Create Room" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="50.0" prefWidth="480.0" visible="false" />
+            <VBox prefHeight="200.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <HBox alignment="CENTER" prefHeight="30.0" prefWidth="600.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="150.0" text="Nickname:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldNicknameS" onKeyTyped="#validateNicknameS" prefHeight="30.0" prefWidth="180.0" />
+                        <TextFlow fx:id="labelErrorNicknameS" prefHeight="30.0" prefWidth="210.0" visible="false">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="200.0" text="Nickname must be from 3" textFill="RED" />
+                              <Label prefHeight="18.0" prefWidth="200.0" text="to 15 alphanum char long." textFill="RED" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </TextFlow>
+                     </children>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="600.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="150.0" text="Room size:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <HBox prefHeight="30.0" prefWidth="180.0">
+                           <children>
+                              <Label prefHeight="30.0" prefWidth="40.0" text="Min:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label id="spinner" fx:id="labelMinRoom" alignment="CENTER" prefHeight="30.0" prefWidth="20.0" style="-fx-background-color: white; -fx-background-radius: 3;" text="2">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <VBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="30.0">
+                                 <children>
+                                    <ImageView fx:id="buttonIncreaseMinRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#increaseMinRoom" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icon-arrow-up.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="buttonDecreaseMinRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#decreaseMinRoom" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icon-arrow-down.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                              <Separator orientation="VERTICAL" prefHeight="30.0" prefWidth="10.0" visible="false" />
+                              <Label prefHeight="30.0" prefWidth="40.0" text="Max:" textFill="WHITE">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Label>
+                              <Label id="spinner" fx:id="labelMaxRoom" alignment="CENTER" prefHeight="30.0" prefWidth="20.0" style="-fx-background-color: white; -fx-background-radius: 3;" text="6">
+                                 <font>
+                                    <Font name="System Bold" size="16.0" />
+                                 </font>
+                              </Label>
+                              <VBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="30.0">
+                                 <children>
+                                    <ImageView fx:id="buttonIncreaseMaxRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#increaseMaxRoom" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icon-arrow-up.png" />
+                                       </image>
+                                    </ImageView>
+                                    <ImageView fx:id="buttonDecreaseMaxRoom" fitHeight="15.0" fitWidth="30.0" onMouseClicked="#decreaseMaxRoom" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../resources/icon-arrow-down.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="60.0" right="60.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="35.0" prefWidth="480.0" visible="false">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="150.0" text="User rejoin:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <CheckBox fx:id="checkBoxRejoin" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="35.0" prefWidth="180.0" selected="true" text="Allow users to rejoin the room after being kicked" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator prefHeight="30.0" prefWidth="480.0" visible="false" />
+            <Button fx:id="buttonCNR" mnemonicParsing="false" onAction="#createNewRoom" prefHeight="40.0" prefWidth="240.0" stylesheets="@../application/application.css" text="Create new room">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxJoinRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="400.0" text="Join Room" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="30.0" />
+               </font>
+            </Label>
+            <Separator prefHeight="50.0" prefWidth="480.0" visible="false" />
+            <VBox prefHeight="200.0" prefWidth="600.0" spacing="20.0">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="240.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="150.0" text="Nickname:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldNicknameC" onKeyTyped="#validateNicknameAddressC" prefHeight="30.0" prefWidth="180.0" />
+                        <TextFlow fx:id="labelErrorNicknameC" prefHeight="30.0" prefWidth="210.0" visible="false">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="200.0" text="Nickname must be from 3" textFill="RED" />
+                              <Label prefHeight="18.0" prefWidth="200.0" text="to 15 alphanum char long." textFill="RED" />
+                           </children>
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </TextFlow>
+                     </children>
+                     <padding>
+                        <Insets left="60.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="30.0" prefWidth="240.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="150.0" text="IP address:" textFill="WHITE">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldIP" onKeyTyped="#validateNicknameAddressC" prefHeight="30.0" prefWidth="180.0" promptText="localhost" />
+                        <Label fx:id="labelErrorIP" prefHeight="30.0" prefWidth="150.0" text="Invalid IP address." textFill="RED" visible="false">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                        </Label>
+                     </children>
+                     <padding>
+                        <Insets left="60.0" right="60.0" />
+                     </padding>
+                  </HBox>
+                  <HBox fx:id="hboxConnection" alignment="CENTER" prefHeight="30.0" prefWidth="242.0" spacing="10.0" visible="false">
+                     <children>
+                        <Label alignment="CENTER" prefHeight="18.0" prefWidth="150.0" text="Connecting to server..." textFill="WHITE" />
+                        <ImageView fitHeight="20.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../resources/icon-loading.gif" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <Separator prefHeight="30.0" prefWidth="480.0" visible="false" />
+            <Button fx:id="buttonJER" mnemonicParsing="false" onAction="#joinExistingRoom" prefHeight="40.0" prefWidth="240.0" stylesheets="@../application/application.css" text="Join existing room">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxServerRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <Label fx:id="labelServerIP" prefHeight="20.0" prefWidth="590.0" text="Private Server IP address: X.X.X.X" textFill="WHITE" />
+            <HBox prefHeight="380.0" prefWidth="600.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="380.0" prefWidth="300.0">
+                     <children>
+                        <ListView id="US" fx:id="listViewUsersS" prefHeight="300.0" prefWidth="300.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+                        <HBox alignment="TOP_CENTER" prefHeight="30.0" prefWidth="300.0" spacing="10.0">
+                           <children>
+                              <Button fx:id="buttonStartGame" mnemonicParsing="false" onAction="#startGame" prefHeight="30.0" prefWidth="107.0" stylesheets="@../application/application.css" text="Start game" />
+                              <Button fx:id="buttonOpenClose" mnemonicParsing="false" onAction="#toggleOpenClose" prefHeight="30.0" prefWidth="85.0" stylesheets="@../application/application.css" text="Open">
+                                 <graphic>
+                                    <Label fx:id="labelOpenClose" prefHeight="17.0" prefWidth="17.0" style="-fx-background-color: lime;" />
+                                 </graphic>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="45.0" />
+                           </padding>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="380.0" prefWidth="300.0">
+                     <children>
+                        <TextArea fx:id="textAreaChatS" editable="false" minHeight="100.0" prefHeight="350.0" prefWidth="300.0" wrapText="true" />
+                        <HBox prefHeight="30.0" prefWidth="300.0">
+                           <children>
+                              <TextField fx:id="textFieldChatS" onKeyPressed="#enterChatHandleS" prefHeight="30.0" prefWidth="240.0" />
+                              <Button fx:id="buttonChatSendS" mnemonicParsing="false" onAction="#sendMessageS" prefHeight="30.0" prefWidth="89.0" stylesheets="@../application/application.css" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxClientRoom" alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="5.0" style="-fx-background-color: black;" visible="false">
+         <children>
+            <HBox prefHeight="400.0" prefWidth="600.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="300.0">
+                     <children>
+                        <Label prefHeight="30.0" prefWidth="280.0" text="User list:" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="20.0" />
+                           </font>
+                        </Label>
+                        <ListView id="UC" fx:id="listViewUsersC" prefHeight="300.0" prefWidth="280.0" style="-fx-background-color: black; -fx-text-fill: white;" />
+                        <Button fx:id="buttonReady" mnemonicParsing="false" onAction="#toggleReady" prefHeight="26.0" prefWidth="90.0" style="-fx-background-color: red;" text="Not ready" textFill="WHITE" />
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
+                  <VBox prefHeight="400.0" prefWidth="300.0">
+                     <children>
+                        <TextArea fx:id="textAreaChatC" editable="false" prefHeight="370.0" prefWidth="300.0" wrapText="true" />
+                        <HBox prefHeight="30.0" prefWidth="300.0">
+                           <children>
+                              <TextField fx:id="textFieldChatC" minHeight="30.0" minWidth="100.0" onKeyPressed="#enterChatHandleC" prefHeight="30.0" prefWidth="240.0" />
+                              <Button fx:id="buttonChatSendC" mnemonicParsing="false" onAction="#sendMessageC" prefHeight="30.0" prefWidth="60.0" stylesheets="@../application/application.css" text="Send" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxBack" alignment="CENTER" layoutY="350.0" prefHeight="50.0" prefWidth="50.0" visible="false">
+         <children>
+            <Button fx:id="buttonBack" mnemonicParsing="false" onAction="#goBack" prefHeight="40.0" prefWidth="40.0">
+               <graphic>
+                  <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/icon-back.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+      <VBox fx:id="vboxGame" alignment="TOP_CENTER" layoutX="-9.0" layoutY="-8.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="418.0" prefWidth="609.0" spacing="20.0" style="-fx-background-color: black;">
+         <children>
+            <AnchorPane prefHeight="421.0" prefWidth="609.0">
+               <children>
+                  <ImageView fitHeight="267.0" fitWidth="600.0" layoutX="5.0" layoutY="37.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../resources/road2.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="finish" fitHeight="89.0" fitWidth="38.0" layoutX="570.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+                  	<image>
+           				<Image url="@../resources/finish.png" />
+        		 </image>
+      			</ImageView>
+      			<ImageView fx:id="car" fitHeight="56.0" fitWidth="118.0" layoutX="5.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true">
+      		         <image>
+      		            <Image url="@../resources/car2.png" />
+      		         </image>
+      		      </ImageView>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="129.0" layoutX="23.0" layoutY="279.0" stroke="WHITE" strokeType="INSIDE" width="573.0" />
+      		      <TextField fx:id="userWord" alignment="CENTER" layoutX="51.0" layoutY="348.0" onKeyPressed="#startType" prefHeight="44.0" prefWidth="523.0">
+      	            	<font>
+      	                	<Font size="20.0" />
+      	            	</font>
+        		</TextField>
+                  <Text fx:id="programWord" fill="WHITE" layoutX="49.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word1" textAlignment="CENTER" wrappingWidth="118.0">
+                    <font>
+                		<Font size="21.0" />
+            		</font>
+                  </Text>
+                  <Text fx:id="secondProgramWord" fill="WHITE" layoutX="195.0" layoutY="313.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word2" textAlignment="CENTER" wrappingWidth="118.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="thirdProgramWord" fill="WHITE" layoutX="337.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word3" textAlignment="CENTER" wrappingWidth="118.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="fourthProgramWord" fill="WHITE" layoutX="467.0" layoutY="314.0" strokeType="OUTSIDE" strokeWidth="0.0" text="word4" textAlignment="CENTER" wrappingWidth="118.0">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Text>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="44.0" layoutX="396.0" layoutY="222.0" stroke="#ffc947" strokeType="INSIDE" strokeWidth="3.0" width="200.0" />
+                  <Text fill="#f50000" layoutX="411.0" layoutY="248.0" stroke="WHITE" strokeType="OUTSIDE" strokeWidth="0.5" text="TIME LEFT:">
+                     <font>
+                        <Font name="Calibri" size="19.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="seconds" fill="WHITE" layoutX="504.0" layoutY="252.0" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="42.64990234375">
+                     <font>
+                        <Font name="Calibri" size="31.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="playAgain" cancelButton="true" layoutX="277.0" layoutY="226.0" mnemonicParsing="false" onAction="#backtoMenu" prefHeight="40.0" prefWidth="101.0" stylesheets="@../application/application.css" text="Play Again">
+                     <font>
+                        <Font size="25.0" />
+                     </font></Button>
+                  <ImageView fx:id="correct" fitHeight="51.0" fitWidth="49.0" layoutX="84.0" layoutY="216.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Documents/03%20-%202nd%20Semester%2022-23/4%20-%20137%20Project/multiplayer-typeracer-game/src/images/check.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="wrong" fitHeight="51.0" fitWidth="49.0" layoutX="84.0" layoutY="216.0" opacity="0.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../Documents/03%20-%202nd%20Semester%2022-23/4%20-%20137%20Project/multiplayer-typeracer-game/src/images/wrong.png" />
+                     </image>
+                  </ImageView>
+               </children>
+             </AnchorPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
