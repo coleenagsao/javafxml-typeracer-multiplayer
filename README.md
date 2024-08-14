@@ -3,7 +3,7 @@
 ![License](https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png)
 
 ## Description
-Git Set Go is a Java-based multiplayer typeracer game using UDP socket programming.
+Git Set Go is a Java-based multiplayer typeracer game using UDP socket programming with a chat. No full game engine is used during its development. 
 
 ## Technologies Used
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
