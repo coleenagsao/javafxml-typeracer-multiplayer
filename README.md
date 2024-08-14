@@ -21,28 +21,38 @@ To run the project, follow these steps:
 5. Start typing when the game begins.
 
 ## Screenshots
+
+
 ![Splash Screen Page](images/splash.png)
+
 *Screenshot of the Splash Screen*
 
 ![Host](images/host.png)
+
 *Screenshot of the Create Room for host*
 
 ![Player](images/player.png)
+
 *Screenshot of the Join Room for players*
 
 ![Host Room](images/room-host.png)
+
 *Screenshot of the Host's Waiting Room*
 
 ![Player Room](images/room-player.png)
+
 *Screenshot of the Player's Waiting Room*
 
 ![Chat](images/chat.png)
+
 *Screenshot of the Chat Functionality*
 
 ![Game](images/game.png)
+
 *Screenshot of Typeracer Game*
 
 ![Game](images/win-lose.png)
+
 *Screenshot of Win-Lose Screen*
 
 ## License
