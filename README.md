@@ -59,4 +59,4 @@ To run the project, follow these steps:
 This project is licensed under the [Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) 4.0 International License](https://creativecommons.org/licenses/by-nc-sa/4.0/).
 
 ## Additional Notes
-Space Shooters is an academic project developed as a part of CMSC 22 (Object-Oriented Programming) in UPLB. 
+Git Set Go is an academic project developed as a part of CMSC 137 (Data Communications and Networking) in UPLB. 
